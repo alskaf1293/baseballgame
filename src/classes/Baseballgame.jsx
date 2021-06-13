@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 import * as utils from "../algorithms/utils.js"
+import * as functions from "../algorithms/functions.js"
+
+import "./css/baseballgame.css"
 
 export default class Baseballgame extends Component{
     constructor(props){
@@ -18,17 +21,22 @@ export default class Baseballgame extends Component{
         if(this.state.loginScreen){
             return(
                 <React.Fragment>
-                    <button onClick={() => {
-                        let possibilities = []
-                        for(let i=0; i<10000;i++){
-                            possibilities.push(utils.addzeros(i,4))
-                        }
-                        let guess = getNumbersWithDifferentDigits(4)
-                        this.setState({gameType :"humanGuesses", loginScreen: false, currentBox2: 0, possibilities: possibilities, guesses: [[guess,null]], initPossibilities: possibilities})}}
-                        >Human Guesses</button>
-                    <button onClick={() => {
-                        let randomNo = randomNumber(0,9999)
-                        this.setState({gameType :"computerGuesses", loginScreen: false, truth: randomNo})}}>Computer Guesses</button>
+                    <img className="loginImg" src="/images/graybaseball.jpg" alt=""/>
+                    <div className="strip">
+                        <h className="title">A Baseball Game</h>
+                        <h className="rules">Rules</h>
+                        <button className="buttonComputer" onClick={() => {
+                            let randomNo = functions.randomNumber(0,9999)
+                            this.setState({gameType :"humanGuesses", loginScreen: false, truth: randomNo})}}
+                            >Human Guesses</button>
+                        <button className="buttonHuman" onClick={() => {
+                            let possibilities = []
+                            for(let i=0; i<10000;i++){
+                                possibilities.push(utils.addzeros(i,4))
+                            }
+                            let guess = functions.getNumbersWithDifferentDigits(4)
+                            this.setState({gameType :"computerGuesses", loginScreen: false, currentBox2: 0, possibilities: possibilities, guesses: [[guess,null]], initPossibilities: possibilities})}}>Computer Guesses</button>
+                    </div>
                 </React.Fragment>
             );
         }
@@ -37,6 +45,7 @@ export default class Baseballgame extends Component{
         var {guesses, truth, currentBox} = this.state
         let query = utils.query(truth, currentBox)
         if(query["S"]===4){
+            guesses.push([currentBox, query])
             this.setState({won: true});
         }
         else if(currentBox.toString().length===4){
@@ -46,13 +55,18 @@ export default class Baseballgame extends Component{
             
         }
     }
-    submitHumanGuess(){
+    submitComputerGuess(){
         var {guesses, currentBox, currentBox2, possibilities} = this.state
         //check illegal cases
         let sum = parseInt(currentBox2) + parseInt(currentBox)
         if(parseInt(currentBox) < 0 || parseInt(currentBox2) < 0 || sum > 4 || (parseInt(currentBox) === 3 && parseInt(currentBox2) === 1)){
 
         }else if(parseInt(currentBox)===4){
+            let object = {
+                "S": parseInt(currentBox,10),
+                "B": parseInt(currentBox2,10),
+            }
+            guesses[guesses.length-1][1] = object
             this.setState({won: true})
         }else{
             let object = {
@@ -81,46 +95,50 @@ export default class Baseballgame extends Component{
         if(!this.state.won){
             return(
                 <React.Fragment>
-                    <input type="string" value={this.state.currentBox} onChange={this.handleCurrentChange}></input>
-                    <button onClick={() => this.submitGuess()}>Submit</button>
+                    <div className="humanInputDiv">
+                        <input className="humanInputBox" type="string" value={this.state.currentBox} onChange={this.handleCurrentChange}></input>
+                        <button className="humanInputSubmit" onClick={() => this.submitGuess()}>Submit</button>
+                    </div>
                 </React.Fragment>
             );
         }else{
-            let newNo = randomNumber(0,9999)
+            let newNo = functions.randomNumber(0,9999)
             return (
                 <React.Fragment>
-                    <p>Congrats, you've won</p>
-                    <button onClick={() => this.setState({won: false, guesses: [], truth: newNo, currentBox: 0})}>Play Again</button>
+                    <p className="winParagraph">Congrats, you've won</p>
+                    <button className="winButton" onClick={() => this.setState({won: false, guesses: [], truth: newNo, currentBox: 0})}>Play Again</button>
                 </React.Fragment>
             );
         }
     }
 
-    renderHumanInput(){
+    renderComputerInput(){
         if(!this.state.won){
             return(
                 <React.Fragment>
-                    <input type="number" value={this.state.currentBox} onChange={this.handleCurrentChange}></input>
-                    <input type="number" value={this.state.currentBox2} onChange={this.handleCurrentChange2}></input>
-                    <button onClick={() => this.submitHumanGuess()}>Submit</button>
+                    <div className="computerInputDiv">
+                        <input className="computerInputBoxStrike" type="number" value={this.state.currentBox} onChange={this.handleCurrentChange}></input>
+                        <input className="computerInputBoxBall" type="number" value={this.state.currentBox2} onChange={this.handleCurrentChange2}></input>
+                        <button className="computerInputSubmit" onClick={() => this.submitComputerGuess()}>Submit</button>
+                    </div>
                 </React.Fragment>
             );
         }else{
             const {initPossibilities} = this.state
-            let newGuess = getNumbersWithDifferentDigits(4)
+            let newGuess = functions.getNumbersWithDifferentDigits(4)
             let noGuessesToWin = this.state.guesses.length
             if( noGuessesToWin>1){
                 return (
                     <React.Fragment>
-                        <p>Computer took {noGuessesToWin} guesses to win</p>
-                        <button onClick={() => this.setState({won: false, guesses: [[newGuess, null]], currentBox: 0, currentBox2: 0, possibilities: initPossibilities})}>Play Again</button>
+                        <p className="winParagraph">Computer took {noGuessesToWin} guesses to win</p>
+                        <button className="winButton" onClick={() => this.setState({won: false, guesses: [[newGuess, null]], currentBox: 0, currentBox2: 0, possibilities: initPossibilities})}>Play Again</button>
                     </React.Fragment>
                 );
             }else{
                 return (
                     <React.Fragment>
-                        <p>Computer took {noGuessesToWin} guess to win</p>
-                        <button onClick={() => this.setState({won: false, guesses: [[newGuess, null]], currentBox: 0, currentBox2: 0, possibilities: initPossibilities})}>Play Again</button>
+                        <p className="winParagraph">Computer took {noGuessesToWin} guess to win</p>
+                        <button className="winButton" onClick={() => this.setState({won: false, guesses: [[newGuess, null]], currentBox: 0, currentBox2: 0, possibilities: initPossibilities})}>Play Again</button>
                     </React.Fragment>
                 );
             }
@@ -129,44 +147,52 @@ export default class Baseballgame extends Component{
     }
     renderGame(){
         if(!this.state.loginScreen){
-            if(this.state.gameType === "humanGuesses"){
-                let guessStyle = {
-                    position: "absolute"
-                }
+            if(this.state.gameType === "computerGuesses"){
                 return (
                     <React.Fragment>
+                        <div className="humanLabel">
+                            <h className="guessLabel">Guesses</h>
+                            <img className="strikesImg" alt="" src="/images/baseballbat.png"/>
+                            <img className="ballImg" alt="" src="/images/baseball.jpg"/>
+                        </div>
                         {this.state.guesses.map(item => {
-                            return (
-                                <div style={{height: 100}}>
-                                    <h1 style={guessStyle}>{item[0]}</h1>
-                                
-                                </div>
-                            );
+                            if(!(item[1] === null)){
+                                return (
+                                    <div className="guessDiv">
+                                        <h1 className="humanGuessStyle">{item[0]}</h1>
+                                        <h2 className="humanStrikeStyle">{item[1]["S"]}</h2>
+                                        <h2 className="humanBallStyle">{item[1]["B"]}</h2>
+                                    </div>
+                                );
+                            }else{
+                                return (
+                                    <div className="guessDiv">
+                                        <h1 className="humanGuessStyle">{item[0]}</h1>
+                                    </div>
+                                );
+                            }
+                            
                         })}
-                        {this.renderHumanInput()}
+                        
+                        {this.renderComputerInput()}
                     </React.Fragment>
                 );
             }
-            else if(this.state.gameType === "computerGuesses"){
-                let guessStyle = {
-                    position: "absolute"
-                }
-                let strikeStyle = {
-                    left: 150,
-                    position: "absolute"
-                }
-                let ballStyle = {
-                    left: 180,
-                    position: "absolute"
-                }
+            else if(this.state.gameType === "humanGuesses"){
+                console.log(this.state.truth)
                 return (
                     <React.Fragment>
+                        <div className="humanLabel">
+                            <h className="guessLabel">Guesses</h>
+                            <img className="strikesImg" alt="" src="/images/baseballbat.png"/>
+                            <img className="ballImg" alt="" src="/images/baseball.jpg"/>
+                        </div>
                         {this.state.guesses.map(item => {
                             return (
-                                <div style={{height: 100}}>
-                                    <h1 style={guessStyle}>{item[0]}</h1>
-                                    <h2 style={strikeStyle}>{item[1]["S"]}</h2>
-                                    <h2 style={ballStyle}>{item[1]["B"]}</h2>
+                                <div className="guessDiv">
+                                    <h1 className="humanGuessStyle">{item[0]}</h1>
+                                    <h2 className="humanStrikeStyle">{item[1]["S"]}</h2>
+                                    <h2 className="humanBallStyle">{item[1]["B"]}</h2>
                                 </div>
                             );
                         })}
@@ -186,21 +212,4 @@ export default class Baseballgame extends Component{
         );
     }
 
-}
-function randomNumber(min, max) { 
-    return Math.floor(Math.random() * (max - min) + min).toString();
-} 
-
-function getNumbersWithDifferentDigits(noDigits){
-    let digits = [0,1,2,3,4,5,6,7,8,9]
-    let num = ""
-    let randoIndex = 0
-    let randoNo = 0
-    for(let i=0; i<noDigits; i++){
-        randoIndex = randomNumber(0,digits.length)
-        randoNo = digits[randoIndex]
-        num = num + randoNo.toString()
-        digits.splice(randoIndex,1)
-    }
-    return num
 }

@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+/*----------------------- Login Screen -----------------------*/
+React.Fragment{
+    position: relative;
+}
+
+.loginImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.strip {
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title{
+    position: absolute;
+    font-family: Lobster;
+    color: black;
+    font-size: 60px;
+    transform: translate(-50%, -50%);
+    top: 30%;
+    left: 50%;
+
+}
+
+.rules{
+    position: absolute;
+    font-family: Lobster;
+    color: black;
+    font-size: 30px;
+    transform: translate(-50%, -50%);
+    top: 45%;
+    left: 50%;
+}
+
+.buttonHuman{
+    position: absolute;
+    color: white;
+    background-color: black;
+    font-family: Lobster;
+    border: 0px;
+    width: 15%;
+    height: 10%;
+    font-size: 18px;
+    border-radius: 15px;
+    transition: 0.5s;
+
+    top: 65%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.buttonComputer{
+    position: absolute;
+    color: white;
+    background-color: black;
+    font-family: Lobster;
+    border: 0px;
+    width: 15%;
+    height: 10%;
+    font-size: 18px;
+    border-radius: 15px;
+    transition: 0.5s;
+
+    top: 65%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+
+.buttonComputer:hover {
+    background-color: #303030;
+} 
+
+.buttonHuman:hover {
+    background-color: #303030;
+}
+
+/*----------------------- Human Guesses -----------------------*/
+.guessDiv {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
+
+.humanGuessStyle {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    font-family: Lobster;
+    left: 40%;
+    top: 50%;
+    font-size: 60px;
+    transform: translate(-50%,-50%);
+}
+
+.humanStrikeStyle {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    font-family: Montserrat;
+    font-size: 40px;
+    left: 55%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.humanBallStyle {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    font-family: Montserrat;
+    font-size: 40px;
+    left: 65%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* - human input - */
+
+.humanInputDiv {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
+
+.humanInputBox {
+    position: absolute;
+    background-color: #D0D0D0;
+    border: 0px;
+    font-family: Lobster;
+    font-size: 30px;
+    text-align: center;
+
+    left: 40%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.humanInputSubmit {
+    position: absolute;
+    background-color: black;
+    color: white;
+    font-family: Lobster;
+    border: 0px;
+    width: 10%;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 15px;
+    transition: 0.5s;
+    font-size: 23px;
+
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* - human labels - */
+
+.humanLabel {
+    position: relative;
+    height: 100px;
+}
+
+.guessLabel {
+    position: absolute;
+    font-family: Montserrat;
+    font-size: 60px;
+
+    left: 40%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.strikesImg {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+    left: 55%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ballImg {
+    position: absolute;
+    height: 60px;
+    width: 60px;
+
+    left: 65%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* - computer input - */
+
+.computerInputDiv {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
+
+.computerInputBoxStrike {
+    position: absolute;
+    background-color: #D0D0D0;
+    border: 0px;
+    font-family: Lobster;
+    font-size: 30px;
+    text-align: center;
+    width: 10%;
+
+    left: 33%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.computerInputBoxBall {
+    position: absolute;
+    background-color: #D0D0D0;
+    border: 0px;
+    font-family: Lobster;
+    font-size: 30px;
+    text-align: center;
+    width: 10%;
+
+    left: 47%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.computerInputSubmit {
+    position: absolute;
+    background-color: black;
+    color: white;
+    font-family: Lobster;
+    border: 0px;
+    width: 10%;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 15px;
+    transition: 0.5s;
+    font-size: 23px;
+
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* - Win messages - */
+
+.winParagraph {
+    font-family: Lobster;
+    font-size: 30px;
+    text-align: center;
+}
+
+.winButton {
+    position: relative;
+    font-family: Montserrat;
+    font-size: 15px;
+    text-align: center;
+    height: 30px;
+    width: 15%;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
